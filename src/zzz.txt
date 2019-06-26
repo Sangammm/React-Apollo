@@ -1,0 +1,36 @@
+onClick={() => {
+                  if (
+                    !(errors.email && errors.password && errors.name) &&
+                    values.email &&
+                    values.password &&
+                    values.email &&
+                    values.confirmpassword
+                  ) {
+                    signup({
+                      variables: {
+                        name: values.name,
+                        email: values.email,
+                        password: values.password
+                      }
+                    });
+                    if (data) {
+                      localStorage.setItem("token", data);
+                    }
+                  }
+                }}
+
+
+
+								,
+  handleSubmit: values => {
+    client
+      .mutate({
+        variables: {
+          email: values.email,
+          name: values.name,
+          password: values.password
+        },
+        mutation: "SIGNUP"
+      })
+      .then(result => console.log(result).then(err => console.log(err)));
+  }

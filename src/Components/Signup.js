@@ -2,8 +2,9 @@ import React from "react";
 import { Form, withFormik, Field } from "formik";
 import gql from "graphql-tag";
 import * as yup from "yup";
-import { withApollo, Mutation } from "react-apollo";
-import { client } from "../Apollo/apollo";
+import { Mutation } from "react-apollo";
+import { withRouter, Link } from "react-router-dom";
+
 export const SIGNUP = gql`
   mutation signup($name: String!, $email: String!, $password: String!) {
     signup(name: $name, email: $email, password: $password) {
@@ -11,56 +12,104 @@ export const SIGNUP = gql`
     }
   }
 `;
-const Signupform = ({ values, errors, touched, handleChange, client }) => (
-  <Mutation mutation={SIGNUP}>
-    {(signup, { data }) => (
-      <div className="form">
-        <h2>Signup</h2>
-        {console.log(client)}
-        <Form>
-          <div>
-            {touched.name && errors.name && <p>{errors.name}</p>}
-            <Field type="text" name="name" placeholder="Name" />
-          </div>
-          <div>
-            {touched.email && errors.email && <p>{errors.email}</p>}
-            <Field type="email" name="email" placeholder="Email" />
-          </div>
-          <div>
-            {touched.password && errors.password && <p>{errors.password}</p>}
-            <Field type="password" name="password" placeholder="Password" />
-          </div>
-          <div>
-            {touched.confirmpassword && errors.confirmpassword && (
-              <p>{errors.confirmpassword}</p>
-            )}
-            <Field
-              type="password"
-              name="confirmpassword"
-              placeholder="Confirm Password"
-            />
-          </div>
-          <button
-            type="submit"
-            onClick={() => {
-              if (!(errors.email && errors.password && errors.name)) {
-                signup({
-                  variables: {
-                    name: values.name,
-                    email: values.email,
-                    password: values.password
+const Signupform = ({ values, errors, touched, history }) => {
+  let errordesign = {
+    background: "pink"
+  };
+
+  return (
+    <div className="user">
+      <Mutation
+        mutation={SIGNUP}
+        onCompleted={({ signup }) => {
+          localStorage.setItem("token", signup.token);
+          console.log("done signup", signup);
+          history.replace("/");
+        }}
+      >
+        {(signup, { error, loading }) => (
+          <div className="form">
+            <h1 className="user__title">Signup</h1>
+            <Form className="form">
+              <div className="form__group" style={errordesign}>
+                {touched.name && errors.name && <p>{errors.name}</p>}
+                <Field
+                  className="form__input"
+                  type="text"
+                  name="name"
+                  placeholder="Name"
+                />
+              </div>
+              <div className="form__group" style={errordesign}>
+                {touched.email && errors.email && <p>{errors.email}</p>}
+                <Field
+                  className="form__input"
+                  type="email"
+                  name="email"
+                  placeholder="Email"
+                />
+              </div>
+              <div className="form__group" style={errordesign}>
+                {touched.password && errors.password && (
+                  <p>{errors.password}</p>
+                )}
+                <Field
+                  className="form__input"
+                  type="password"
+                  name="password"
+                  autoComplete="true"
+                  placeholder="Password"
+                />
+              </div>
+              <div className="form__group" style={errordesign}>
+                {touched.confirmpassword && errors.confirmpassword && (
+                  <p>{errors.confirmpassword}</p>
+                )}
+                <Field
+                  className="form__input"
+                  type="password"
+                  name="confirmpassword"
+                  placeholder="Confirm Password"
+                  autoComplete="true"
+                />
+              </div>
+
+              <button
+                disabled={loading}
+                className="btn"
+                type="submit"
+                onClick={() => {
+                  if (
+                    !(errors.email && errors.password && errors.name) &&
+                    values.email &&
+                    values.password &&
+                    values.email &&
+                    values.confirmpassword
+                  ) {
+                    signup({
+                      variables: {
+                        name: values.name,
+                        email: values.email,
+                        password: values.password
+                      }
+                    });
                   }
-                });
-              }
-            }}
-          >
-            Submit
-          </button>
-        </Form>
-      </div>
-    )}
-  </Mutation>
-);
+                }}
+              >
+                SignUp
+              </button>
+              <p className="user__header" />
+              {error && console.log(error)}
+            </Form>
+          </div>
+        )}
+      </Mutation>
+      <Link className="user__header" to="/">
+        Login
+      </Link>
+    </div>
+  );
+};
 
 const Signup = withFormik({
   mapPropsToValues() {
@@ -80,11 +129,11 @@ const Signup = withFormik({
     password: yup
       .string()
       .required("Password Required!!")
-      .min(6),
+      .min(6, "Password Too Short"),
     confirmpassword: yup
       .string()
       .oneOf([yup.ref("password"), null], "Passwords must match")
   })
 })(Signupform);
 
-export default withApollo(Signup);
+export default withRouter(Signup);

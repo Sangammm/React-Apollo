@@ -1,5 +1,5 @@
 import React from "react";
-import "./App.css";
+import "./App.scss";
 import { client } from "./Apollo/apollo";
 import Routes from "./Routes";
 import { ApolloProvider } from "react-apollo";

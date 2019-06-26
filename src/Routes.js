@@ -7,7 +7,7 @@ import Home from "./Components/Home";
 const Routes = () => {
   return (
     <BrowserRouter>
-      <Route path="/" component={Signin} />
+      <Route exact path="/" component={Signin} />
       <Route path="/signup" component={Signup} />
       <Route path="/home" component={Home} />
     </BrowserRouter>
