@@ -24,12 +24,12 @@ const Signupform = ({ values, errors, touched, history }) => {
         onCompleted={({ signup }) => {
           localStorage.setItem("token", signup.token);
           console.log("done signup", signup);
-          history.replace("/");
+          history.replace("/home");
         }}
       >
         {(signup, { error, loading }) => (
           <div className="form">
-            <h1 className="user__title">Signup</h1>
+            <h1 className="user__header">Signup</h1>
             <Form className="form">
               <div className="form__group" style={errordesign}>
                 {touched.name && errors.name && <p>{errors.name}</p>}
@@ -98,15 +98,14 @@ const Signupform = ({ values, errors, touched, history }) => {
               >
                 SignUp
               </button>
-              <p className="user__header" />
               {error && console.log(error)}
+              <Link className="user__title" to="/">
+                Login
+              </Link>
             </Form>
           </div>
         )}
       </Mutation>
-      <Link className="user__header" to="/">
-        Login
-      </Link>
     </div>
   );
 };

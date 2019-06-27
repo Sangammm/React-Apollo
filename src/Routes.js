@@ -1,15 +1,19 @@
 import React from "react";
-import { BrowserRouter, Route } from "react-router-dom";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
 import Signup from "./Components/Signup";
 import Signin from "./Components/Signin";
 import Home from "./Components/Home";
+import Wrapper from "./Components/Wrapper";
 
+export const APP_SECRET = "MY-APP-SECRET";
 const Routes = () => {
   return (
     <BrowserRouter>
-      <Route exact path="/" component={Signin} />
-      <Route path="/signup" component={Signup} />
-      <Route path="/home" component={Home} />
+      <Switch>
+        <Route exact path="/" component={Wrapper} />
+        <Route path="/signup" component={Signup} />
+        <Route path="/home" component={Home} />
+      </Switch>
     </BrowserRouter>
   );
 };

@@ -6,9 +6,7 @@ import { ApolloProvider } from "react-apollo";
 
 const App = () => (
   <ApolloProvider client={client}>
-    <div>
-      <Routes />
-    </div>
+    <Routes />
   </ApolloProvider>
 );
 
