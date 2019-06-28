@@ -12,12 +12,10 @@ export const LOGIN = gql`
   }
 `;
 
-const Wrapper = ({ history }) => (
+const Wrappersignin = ({ history }) => (
   <Mutation
     mutation={LOGIN}
     onCompleted={({ login }) => {
-      console.log("login sucessfull");
-      console.log(login.token);
       localStorage.setItem("token", login.token);
       history.replace("/home");
     }}
@@ -36,4 +34,4 @@ const Wrapper = ({ history }) => (
     }}
   </Mutation>
 );
-export default withRouter(Wrapper);
+export default withRouter(Wrappersignin);

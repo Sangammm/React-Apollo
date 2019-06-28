@@ -1,27 +1,17 @@
-import React, { useEffect, cleanUp, useState } from "react";
-import { Link, withRouter } from "react-router-dom";
-import { Mutation, ApolloConsumer } from "react-apollo";
+import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import jwt from "jsonwebtoken";
 import { APP_SECRET } from "../Const";
-import { from } from "zen-observable";
 
 const Signin = props => {
   const [email, setemail] = useState("");
   const [password, setpassword] = useState("");
-  console.log("props::", props.signin);
   const { signin, conditions } = props;
   useEffect(() => {
     let encrypted = localStorage.getItem("token");
     if (encrypted) {
       const decrypted = jwt.verify(encrypted, APP_SECRET);
       console.log("decrypted", decrypted);
-
-      // signin({
-      //   variables: {
-      //     email: decrypted.email,
-      //     password: decrypted.password
-      //   }
-      // });
     }
   }, []);
 
@@ -48,6 +38,7 @@ const Signin = props => {
               name="email"
               placeholder="Email"
               value={email}
+              required
               onChange={e => {
                 setemail(e.target.value);
               }}
@@ -58,6 +49,7 @@ const Signin = props => {
               className="form__input"
               type="password"
               name="password"
+              required
               autoComplete="true"
               placeholder="Password"
               value={password}

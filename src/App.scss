@@ -1,6 +1,6 @@
-$font-family: "Roboto";
 $font-size: 24px;
 $color-primary: #aba194;
+$font-family: "Roboto";
 
 * {
   margin: 0;
@@ -40,6 +40,12 @@ body {
   text-align: center;
 }
 
+.form--no {
+  animation: NO 1s ease-in-out;
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+
 .form {
   margin-top: 40px;
   border-radius: 6px;
@@ -48,13 +54,6 @@ body {
   transform: translate3d(0, 500px, 0);
   animation: arrive 500ms ease-in-out 0.9s forwards;
 }
-
-.form--no {
-  animation: NO 1s ease-in-out;
-  opacity: 1;
-  transform: translate3d(0, 0, 0);
-}
-
 .form__input {
   display: block;
   width: 100%;
@@ -140,4 +139,64 @@ body {
   100% {
     background-position: 0 0;
   }
+}
+.homepage {
+  margin: 30px;
+}
+.addpost {
+  margin-top: 30px;
+  margin: auto;
+  border-bottom: 2px solid black;
+  width: 90%;
+  overflow: hidden;
+  white-space: nowrap;
+}
+.form_addpost {
+  margin-top: 40px;
+  overflow: hidden;
+  opacity: 0;
+  transform: translate3d(0, 500px, 0);
+  animation: arrive 500ms ease-in-out 0.9s forwards;
+}
+.form__input_addpost {
+  display: block;
+  border-radius: 6px;
+  width: 100%;
+  padding: 20px;
+  font-family: $font-family;
+  -webkit-appearance: none;
+  border: 0;
+  outline: 0;
+  transition: 0.3s;
+  font-size: large;
+
+  &:focus {
+    background: darken(#fff, 3%);
+  }
+}
+
+.btn_addpost {
+  margin-top: 10px;
+  display: block;
+  width: 100%;
+  padding: 20px;
+  font-family: $font-family;
+  -webkit-appearance: none;
+  outline: 0;
+  border: 0;
+  color: white;
+  background: $color-primary;
+  transition: 0.3s;
+  border-radius: 6px;
+  font-size: large;
+
+  &:hover {
+    background: darken($color-primary, 5%);
+  }
+}
+a {
+  margin-left: 15px;
+}
+.like {
+  margin-left: 5px;
 }
