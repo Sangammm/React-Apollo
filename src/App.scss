@@ -199,4 +199,19 @@ a {
 }
 .like {
   margin-left: 5px;
+  width: auto;
+  height: auto;
+  //background-color: rgba(0, 0, 0, 0.2);
+  padding: 10px;
+}
+.post {
+  position: relative;
+  margin-bottom: 10px;
+  padding: 10px;
+}
+.Like {
+  color: #4b4b4b;
+  font-size: 20px;
+  position: relative;
+  margin: 5px;
 }

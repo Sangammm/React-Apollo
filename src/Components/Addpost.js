@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Mutation } from "react-apollo";
 import gql from "graphql-tag";
 import { withRouter } from "react-router-dom";
-
+import { FEED } from "../Apollo/gql";
 export const POST = gql`
   mutation post($url: String!, $description: String!) {
     post(url: $url, description: $description) {
@@ -23,25 +23,27 @@ const Addpost = ({ history }) => {
   const [description, setdescription] = useState("");
 
   useEffect(() => {
-    navigator.clipboard.readText().then(text => {
-      if (text) {
-        if (is_url(text)) {
-          let bool = window.confirm("want to set Link = " + text);
-          if (bool) {
-            setlink(text);
+    navigator.clipboard &&
+      navigator.clipboard.readText().then(text => {
+        if (text) {
+          if (is_url(text)) {
+            let bool = window.confirm("want to set Link = " + text);
+            if (bool) {
+              setlink(text);
+            }
           }
         }
-      }
-    });
+      });
   }, []);
   return (
     <Mutation
       mutation={POST}
       onCompleted={({ post }) => {
         debugger;
-        console.log(post);
-        console.log("mutation completed sucessfully");
+        // console.log(post);
+        // console.log("mutation completed sucessfully");
       }}
+      awaitRefetchQueries={true}
     >
       {(post, { error, loading }) =>
         loading ? (
@@ -62,7 +64,13 @@ const Addpost = ({ history }) => {
                     variables: {
                       url: link,
                       description: description
-                    }
+                    },
+                    fetchPolicy: "no-cache",
+                    refetchQueries: [
+                      {
+                        query: FEED
+                      }
+                    ]
                   });
                 }}
               >

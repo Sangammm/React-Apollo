@@ -1,17 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Form, withFormik, Field } from "formik";
-import gql from "graphql-tag";
 import * as yup from "yup";
 import { Mutation } from "react-apollo";
 import { withRouter, Link } from "react-router-dom";
-
-export const SIGNUP = gql`
-  mutation signup($name: String!, $email: String!, $password: String!) {
-    signup(name: $name, email: $email, password: $password) {
-      token
-    }
-  }
-`;
+import { SIGNUP } from "../Apollo/gql";
 const Signupform = ({ values, errors, touched, history }) => {
   let errordesign = {
     background: "pink"
@@ -23,7 +15,8 @@ const Signupform = ({ values, errors, touched, history }) => {
         mutation={SIGNUP}
         onCompleted={({ signup }) => {
           localStorage.setItem("token", signup.token);
-          console.log("done signup", signup);
+          localStorage.setItem("id", signup.user.id);
+          console.log("done signup", signup.user.id);
           history.replace("/home");
         }}
       >

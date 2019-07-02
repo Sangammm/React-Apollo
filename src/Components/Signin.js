@@ -7,13 +7,6 @@ const Signin = props => {
   const [email, setemail] = useState("");
   const [password, setpassword] = useState("");
   const { signin, conditions } = props;
-  useEffect(() => {
-    let encrypted = localStorage.getItem("token");
-    if (encrypted) {
-      const decrypted = jwt.verify(encrypted, APP_SECRET);
-      console.log("decrypted", decrypted);
-    }
-  }, []);
 
   return (
     <div className="user">

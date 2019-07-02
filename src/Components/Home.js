@@ -1,54 +1,43 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Addpost from "./Addpost";
-import { Query } from "react-apollo";
-import gql from "graphql-tag";
+import { Query, Mutation } from "react-apollo";
+import { FEED } from "../Apollo/gql";
+//import { VOTE } from "../Apollo/gql";
+import Likes from "./Likes";
 import { withRouter } from "react-router-dom";
-
-export const FEED = gql`
-  {
-    feed {
-      id
-      url
-      description
-      votes {
-        id
-        user {
-          id
-          name
-        }
-      }
-    }
-  }
-`;
-
 const Home = ({ history }) => {
   return (
     <div className="homepage">
       <Addpost />
       <Query query={FEED}>
         {({ loading, error, data }) => {
-          console.log(data);
-
           return loading ? (
             <div>Loaderrr</div>
           ) : error ? (
             <div>
-              {
-                //history.replace("/")
-              }
+              {history.replace("/")}
               {console.log(error)}
             </div>
           ) : (
             <div className="nothing">
               <ul>
-                {data.feed.map((object, index) => (
-                  <li key={index}>
-                    {object.description}
-                    {"    "}
-                    <a href={object.url}>open</a>
-                    <button className="like">Like</button>{" "}
-                  </li>
-                ))}
+                {data.feed &&
+                  data.feed.map((object, index) => (
+                    <div key={index} className="post">
+                      {console.log(object)}
+                      {object.description}
+                      {"    "}
+                      <a
+                        href={object.url}
+                        rel="noopener noreferrer"
+                        target="_blank"
+                      >
+                        open
+                      </a>
+
+                      <Likes {...object} />
+                    </div>
+                  ))}
               </ul>
             </div>
           );
@@ -57,4 +46,4 @@ const Home = ({ history }) => {
     </div>
   );
 };
-export default Home;
+export default withRouter(Home);

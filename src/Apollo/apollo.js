@@ -1,10 +1,13 @@
 import ApolloClient from "apollo-boost";
-
-const token = localStorage.getItem("token");
-
+console.log(localStorage.getItem("token"));
+let token;
 export const client = new ApolloClient({
   uri: "http://localhost:4001/",
-  headers: {
-    Authorization: `Bearer ${token}`
+  request: operation => {
+    operation.setContext({
+      headers: {
+        authorization: `Bearer ${localStorage.getItem("token")}`
+      }
+    });
   }
 });
