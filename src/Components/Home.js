@@ -8,6 +8,16 @@ import { withRouter } from "react-router-dom";
 const Home = ({ history }) => {
   return (
     <div className="homepage">
+      <button
+        className="logout"
+        onClick={() => {
+          localStorage.removeItem("id");
+          localStorage.removeItem("token");
+          history.replace("/");
+        }}
+      >
+        Logout
+      </button>
       <Addpost />
       <Query query={FEED}>
         {({ loading, error, data }) => {
