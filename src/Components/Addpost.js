@@ -21,6 +21,7 @@ function is_url(str) {
 const Addpost = ({ history }) => {
   const [link, setlink] = useState("");
   const [description, setdescription] = useState("");
+  const [Error, setError] = useState("");
 
   useEffect(() => {
     navigator.clipboard &&
@@ -40,8 +41,6 @@ const Addpost = ({ history }) => {
       mutation={POST}
       onCompleted={({ post }) => {
         debugger;
-        // console.log(post);
-        // console.log("mutation completed sucessfully");
       }}
       awaitRefetchQueries={true}
     >
@@ -81,6 +80,7 @@ const Addpost = ({ history }) => {
                     name="link"
                     placeholder="Link"
                     value={link}
+                    required
                     onChange={e => {
                       setlink(e.target.value);
                     }}
@@ -91,6 +91,7 @@ const Addpost = ({ history }) => {
                     className="form__input_addpost"
                     type="text"
                     name="Description"
+                    required
                     placeholder="Description"
                     wrap="soft"
                     style={{

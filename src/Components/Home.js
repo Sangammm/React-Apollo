@@ -20,11 +20,10 @@ const Home = ({ history }) => {
             </div>
           ) : (
             <div className="nothing">
-              <ul>
-                {data.feed &&
-                  data.feed.map((object, index) => (
-                    <div key={index} className="post">
-                      {console.log(object)}
+              {data.feed &&
+                data.feed.map((object, index) => (
+                  <div key={index} className="post">
+                    <p>
                       {object.description}
                       {"    "}
                       <a
@@ -34,11 +33,10 @@ const Home = ({ history }) => {
                       >
                         open
                       </a>
-
-                      <Likes {...object} />
-                    </div>
-                  ))}
-              </ul>
+                    </p>
+                    <Likes {...object} />
+                  </div>
+                ))}
             </div>
           );
         }}

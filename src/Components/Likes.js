@@ -1,10 +1,4 @@
-import React, {
-  useState,
-  useContext,
-  useEffect,
-  useCallback,
-  useMemo
-} from "react";
+import React from "react";
 import { Mutation } from "react-apollo";
 import { FEED } from "../Apollo/gql";
 import { VOTE } from "../Apollo/gql";
@@ -36,37 +30,58 @@ const Likes = (props, { history }) => {
           <div>
             {check(props.votes) ? (
               <div className="Like">
-                {props.votes.length > 1
-                  ? `Liked by you and other ${props.votes.length - 1}`
-                  : "Liked by You"}
+                {props.votes.length > 1 ? (
+                  <details>
+                    <summary>{`Liked by you and other ${props.votes.length -
+                      1}`}</summary>
+                    <div>
+                      {props.votes.map(obj => {
+                        return `${obj.user.name}, `;
+                      })}
+                    </div>
+                  </details>
+                ) : (
+                  <div>Liked by You</div>
+                )}
               </div>
             ) : (
               <div className="Like">
-                <button
-                  className="like"
-                  onClick={() =>
-                    vote({
-                      variables: {
-                        id: props.id
-                      },
-                      fetchPolicy: "no-cache",
-                      refetchQueries: [
-                        {
-                          query: FEED
-                        }
-                      ]
-                    })
-                  }
-                >
-                  <h3>Like</h3>
-                </button>
-                {`Liked By ${props.votes.length}`}
+                {loading ? (
+                  "Liking....."
+                ) : (
+                  <div
+                    className="button"
+                    onClick={() =>
+                      vote({
+                        variables: {
+                          id: props.id
+                        },
+                        fetchPolicy: "no-cache",
+                        refetchQueries: [
+                          {
+                            query: FEED
+                          }
+                        ]
+                      })
+                    }
+                  >
+                    Like
+                  </div>
+                )}
+                {props.votes.length > 0 ? (
+                  <details>
+                    <summary>{`Liked By ${props.votes.length}`}</summary>
+                    <div>
+                      {props.votes.map(obj => {
+                        return `${obj.user.name}, `;
+                      })}
+                    </div>
+                  </details>
+                ) : (
+                  "Liked By 0"
+                )}
               </div>
             )}
-            <details>
-              <summary>Expand</summary>
-              <div>Your Likersss</div>
-            </details>
           </div>
         )
       }
