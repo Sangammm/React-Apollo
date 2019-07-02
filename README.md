@@ -1,4 +1,4 @@
-### Made By me Helped By Yash Gandhi.
+## Made By me, Helped By Yash Gandhi.
 
 Too Start Front End
 
@@ -19,7 +19,7 @@ You will also see any lint errors in the console.
 You need backend Graphql server for to run this project:
 https://github.com/simformsolutions/graphql-ts
 
-###TO Run Server
+## TO Run Server
 
 ### Prerequisites
 
